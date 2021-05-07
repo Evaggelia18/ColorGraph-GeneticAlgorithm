@@ -8,5 +8,9 @@ namespace ColorGraph
 {
     class Procedure
     {
+        public static void start_Procedure (List<Functions> population, string answer)
+        {
+
+        }
     }
 }
