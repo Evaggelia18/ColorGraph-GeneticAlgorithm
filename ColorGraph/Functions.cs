@@ -210,15 +210,15 @@ namespace ColorGraph
 
                         if (j.Equals(2) || j.Equals(3) || j.Equals(4) && population[i].col[k][j] == 1)
                         {
-                            if (k.Equals(0) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0))
+                            if (k.Equals(0) && (population[i].col[k + 1][j] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k][j + 1] == 0))
                             {
                                 if (j.Equals(2) || j.Equals(4)) { grade++; } else if (j.Equals(3)) { grade = grade + 2; }
                             }
-                            else if (k.Equals(10) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0))
+                            else if (k.Equals(10) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0))
                             {
                                 if (j.Equals(2) || j.Equals(4)) { grade++; } else if (j.Equals(3)) { grade = grade + 2; }
                             }
-                            else if (population[i].col[k][j + 1] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0)
+                            else if ( (!k.Equals(0) && !k.Equals(10)) && population[i].col[k][j + 1] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0)
                             {
                                 if (j.Equals(2) || j.Equals(4)) { grade++; } else if (j.Equals(3)) { grade = grade + 2; }
                             }

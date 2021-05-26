@@ -42,6 +42,7 @@ namespace ColorGraph
             {
                 Console.WriteLine("|" + solution.col[i][0] + "|" + solution.col[i][1] + "|" + solution.col[i][2] + "|" + solution.col[i][3] + "|" + solution.col[i][4] + "|" + solution.col[i][5] + "|" + solution.col[i][6] + "|" + "\n");
             }
+            Console.WriteLine(solution.grade);
         }
 
 
