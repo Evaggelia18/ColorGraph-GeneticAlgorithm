@@ -1,0 +1,7 @@
+C:\Users\eyaki\Desktop\ColorGraph\bin\Debug\ColorGraph.exe.config
+C:\Users\eyaki\Desktop\ColorGraph\bin\Debug\ColorGraph.exe
+C:\Users\eyaki\Desktop\ColorGraph\bin\Debug\ColorGraph.pdb
+C:\Users\eyaki\Desktop\ColorGraph\obj\Debug\ColorGraph.csprojAssemblyReference.cache
+C:\Users\eyaki\Desktop\ColorGraph\obj\Debug\ColorGraph.csproj.CoreCompileInputs.cache
+C:\Users\eyaki\Desktop\ColorGraph\obj\Debug\ColorGraph.exe
+C:\Users\eyaki\Desktop\ColorGraph\obj\Debug\ColorGraph.pdb

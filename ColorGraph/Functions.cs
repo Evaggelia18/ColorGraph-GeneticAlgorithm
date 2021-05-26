@@ -11,10 +11,10 @@ namespace ColorGraph
         public int grade;
         public List<List<int>> col;
 
-        public Functions( int grade, List<List<int>> col )
+        public Functions( int grade1, List<List<int>> column )
         {
-            grade = grade;
-            col = col;
+            grade = grade1;
+            col = column;
         }
 
         public static List<Functions> Population(int num)
@@ -23,25 +23,27 @@ namespace ColorGraph
             //Αρχικός πληθυσμός : 10
 
             Random rn;
+            int ans = num;
             for (int i = 0; i<=9; i++)
             {
                 List<List<int>> population = new List<List<int>>();
                 if (num == 0) { break; }
                 for (int j = 0; j<= 10; j++)
                 {
+                    num = ans;
                     if (num == 0) { break; }
                     List<int> columns = new List<int>();
                     for (int k = 0; k <= 6; k++)
                     {
                         rn = new Random();
-                        if( rn.Next(1, 6) == 6 )
+                        if( rn.Next(1, 7) == 6 )
                         {
-                            columns[k] = 1;
+                            columns.Add(1);
                             num--;
                         }
                         else 
                         {
-                            columns[k] = 0;
+                            columns.Add(0);
                         }
                         //Οταν συμπληρώνεται ο αριθμός τον κόμβων που θέλουμε να χρωματίσουμε σε ένα γράφο οι επαναλήψεις τελειώνουν
                         if(num==0) { break; }
@@ -91,19 +93,19 @@ namespace ColorGraph
             for (int i=0; i<=7; i=i+2)
             {
                 List<List<int>> children = new List<List<int>>();
-                //1ο παιδί στήλες 0-5
+                //1ο παιδί γραμμές 0-5
                 for (int k = 0; k<= 5; k++) { children.Add(previous_gen[i].col[k]); }
                 
-                // στήλες 6-10
+                // γραμμές 6-10
                 for (int k = 6; k <= 10; k++) { children.Add(previous_gen[i + 1].col[k]); }
                 
                 next_gen.Add(new Functions(0, children));
                 children = new List<List<int>>();
 
-                //2o παιδί στήλες 6-10
+                //2o παιδί γραμμές 6-10
                 for (int k = 6; k <= 10; k++) { children.Add(previous_gen[i].col[k]); }
                 
-                //στήλες 0-5
+                //γραμμές 0-5
                 for (int k = 0; k <= 5; k++) { children.Add(previous_gen[i + 1].col[k]); }
                
                 next_gen.Add(new Functions(0, children));
@@ -117,57 +119,58 @@ namespace ColorGraph
             int grade = 0;
             for (int i=0; i<=9; i++)
             {
-                for (int k = 0; k<=10; k++)  //11 στήλες
+                for (int k = 0; k<=10; k++)  //11 γραμμές
                 {
-                    for (int j = 0; j<=6; j++)  // 7 γραμμές
+                    for (int j = 0; j<=6; j++)  // 7 στήλες
                     {
                         //Ελεγχος για τη πρώτη στήλη της κάθε λύσης με διαφορετικές περιπτώσεις για τη πρώτη και τη τελευταία γράμμή
                         if ( k.Equals(0) && population[i].col[k][j] == 1)
                         {
                             if (j.Equals(0) && (population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0) ) { grade = grade + 2; }
                             
-                            else if (j.Equals(10) && (population[i].col[k][j - 1] == 0 && population[i].col[k + 1][j] == 0)) { grade = grade + 2; }
+                            else if (j.Equals(6) && (population[i].col[k][j - 1] == 0 && population[i].col[k + 1][j] == 0)) { grade = grade + 2; }
                            
-                            else if (population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0 && population[i].col[k][j - 1] == 0) { grade = grade + 2; }
+                            else if ((!j.Equals(0) && !j.Equals(6)) && population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0 && population[i].col[k][j - 1] == 0) { grade = grade + 2; }
                             
                         }
-                        else if (k.Equals(10) && population[i].col[k][j] == 1)
-                        {
-                            if (j.Equals(0) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0)) { grade = grade + 2; }
-                            
-                            else if (j.Equals(10) && (population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0) ) { grade = grade + 2; }
-                            
-                            else if (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0) { grade = grade + 2; }
-                           
-                        }
-                        else if (k.Equals(1) || k.Equals(9) && population[i].col[k][j] == 1)
+                        else if (k.Equals(1) && population[i].col[k][j] == 1)
                         {
                             if (j.Equals(0) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
                             
-                            else if (j.Equals(10) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0)) { grade++; }
+                            else if (j.Equals(6) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0)) { grade++; }
                             
-                            else if (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k][j + 1] == 0) { grade++; }
-                        
-                            if (j.Equals(0) && population[i].col[k][j] == 1)
-                            {
-                                if (k.Equals(0) && (population[i].col[k][j+1] == 0 && population[i].col[k +1][j] == 0) ) { grade = grade + 2; }
-                                
-                                else if (k.Equals(10) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0)) { grade = grade + 2; }
-                                
-                                else if (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0 ) { grade = grade + 2; }
-                                
-                            }
-                            else if (j.Equals(1) && population[i].col[k][j] == 1)
-                            {
-                                if (k.Equals(0) && (population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
-                               
-                                else if (k.Equals(10) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
-                               
-                                else if (population[i].col[k][j + 1] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0) { grade++; }
-                               
-                            }
-                            //
+                            else if ((!j.Equals(0) && !j.Equals(6)) && population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k][j + 1] == 0) { grade++; }
+                            
                         }
+
+                        if (j.Equals(0) && population[i].col[k][j] == 1)
+                        {
+                            if (k.Equals(0) && (population[i].col[k][j+1] == 0 && population[i].col[k +1][j] == 0) ) { grade = grade + 2; } 
+
+                            else if (k.Equals(10) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0)) { grade = grade + 2; }
+                                
+                            else if ((!k.Equals(0) && !k.Equals(10)) && population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0 ) { grade = grade + 2; }
+                                
+                        }
+                        else if (j.Equals(6) && population[i].col[k][j] == 1)
+                        {
+                            if (k.Equals(0) && (population[i].col[k][j - 1] == 0 && population[i].col[k + 1][j] == 0)) { grade = grade + 2; }
+
+                            else if (k.Equals(10) && (population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0)) { grade = grade + 2; }
+
+                            else if ((!k.Equals(0) && !k.Equals(10)) && population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0) { grade = grade + 2; }
+
+                        }
+                        else if (j.Equals(1) || j.Equals(5) && population[i].col[k][j] == 1)
+                        {
+                            if (k.Equals(0) && (population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
+                               
+                            else if (k.Equals(10) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
+                               
+                            else if ((!k.Equals(0) && !k.Equals(10)) && population[i].col[k][j + 1] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0) { grade++; }
+                               
+                        }
+
                     }
                 }
                 population[i].grade = grade;
@@ -186,38 +189,38 @@ namespace ColorGraph
                 {
                     for (int j=0; j<=6; j++)
                     {
-                        if (j.Equals(0) && population[i].col[k][j] == 1)
+                        if (k.Equals(0) && population[i].col[k][j] == 1)
                         {
-                            if (k.Equals(0) && (population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0)) { grade = grade + 2; }
+                            if (j.Equals(0) && (population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0)) { grade = grade + 2; }
 
-                            else if (k.Equals(10) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0)) { grade = grade + 2; }
-                           
-                            else if (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0) { grade = grade + 2; }
-                           
+                            else if (j.Equals(6) && (population[i].col[k][j - 1] == 0 && population[i].col[k + 1][j] == 0)) { grade = grade + 2; }
+
+                            else if ((!j.Equals(0) && !j.Equals(6)) && population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0 && population[i].col[k][j - 1] == 0) { grade = grade + 2; }
+
                         }
-                        else if (j.Equals(1) && population[i].col[k][j] == 1)
+                        else if (k.Equals(1) && population[i].col[k][j] == 1)
                         {
-                            if (k.Equals(0) && (population[i].col[k][j + 1] == 0 && population[i].col[k + 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
-                          
-                            else if (k.Equals(10) && (population[i].col[k][j + 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
-                          
-                            else if (population[i].col[k][j + 1] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0) { grade++; }
-                           
+                            if (j.Equals(0) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0)) { grade++; }
+
+                            else if (j.Equals(6) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0)) { grade++; }
+
+                            else if ((!j.Equals(0) && !j.Equals(6)) && population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k][j + 1] == 0) { grade++; }
+
                         }
 
-                        if (k.Equals(2) || k.Equals(3) || k.Equals(4) && population[i].col[k][j] == 1)
+                        if (j.Equals(2) || j.Equals(3) || j.Equals(4) && population[i].col[k][j] == 1)
                         {
-                            if (j.Equals(0) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0))
+                            if (k.Equals(0) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j + 1] == 0))
                             {
-                                if (k.Equals(2) || k.Equals(4)) { grade++; } else if (k.Equals(3)) { grade = grade + 2; }
+                                if (j.Equals(2) || j.Equals(4)) { grade++; } else if (j.Equals(3)) { grade = grade + 2; }
                             }
-                            else if (j.Equals(10) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0))
+                            else if (k.Equals(10) && (population[i].col[k + 1][j] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k][j - 1] == 0))
                             {
-                                if (k.Equals(2) || k.Equals(4)) { grade++; } else if (k.Equals(3)) { grade = grade + 2; }
+                                if (j.Equals(2) || j.Equals(4)) { grade++; } else if (j.Equals(3)) { grade = grade + 2; }
                             }
                             else if (population[i].col[k][j + 1] == 0 && population[i].col[k][j - 1] == 0 && population[i].col[k - 1][j] == 0 && population[i].col[k + 1][j] == 0)
                             {
-                                if (k.Equals(2) || k.Equals(4)) { grade++; } else if (k.Equals(3)) { grade = grade + 2; }
+                                if (j.Equals(2) || j.Equals(4)) { grade++; } else if (j.Equals(3)) { grade = grade + 2; }
                             }
                         }
                     //
